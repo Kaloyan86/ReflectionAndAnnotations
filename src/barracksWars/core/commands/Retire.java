@@ -1,11 +1,15 @@
 package barracksWars.core.commands;
 
+import barracksWars.anotations.Inject;
 import barracksWars.interfaces.Repository;
-import barracksWars.interfaces.UnitFactory;
 
 public class Retire extends Command {
-    public Retire(String[] data, Repository repository, UnitFactory unitFactory) {
-        super(data, repository, unitFactory);
+    @Inject
+    private Repository repository;
+
+
+    public Retire(String[] data) {
+        super(data);
     }
 
     @Override
@@ -14,7 +18,7 @@ public class Retire extends Command {
         String result;
 
         try {
-            this.getRepository().removeUnit(unitType);
+            this.repository.removeUnit(unitType);
             result = unitType + " retired!";
         } catch (IllegalArgumentException ex) {
             result = ex.getMessage();
